@@ -19,7 +19,9 @@
 //
 // Env:
 //   AETHERION_START_YEAR   tahun awal mode 1 (default: 2013, saat Contribution Graph muncul)
-//   AETHERION_COUNTDOWN    detik jeda antar tahun mode 1 (default: 300 = 5 menit; 0 = nonaktif)
+//   AETHERION_COUNTDOWN    detik jeda antar tahun mode 1 (default: 5400 = 1,5 jam; 0 = nonaktif).
+//                          Selama jeda, script mensimulasikan aktivitas mengetik ala manusia
+//                          (file acak dibuat, diketik, lalu dihapus) agar sesi tetap aktif.
 //   AETHERION_COMMITS      jumlah commit per tahun (sama dengan --count)
 
 import process from "node:process";
@@ -31,7 +33,7 @@ import { askQuestion, closePrompter, pickNumber } from "./src/cli.js";
 
 const VERSION = "2.0";
 const GRAPH_START_YEAR = 2013; // Contribution Graph GitHub diluncurkan 7 Januari 2013
-const DEFAULT_COUNTDOWN_SECONDS = 300; // 5 menit
+const DEFAULT_COUNTDOWN_SECONDS = 5400; // 1,5 jam: pencegahan deteksi + menjaga sesi tetap aktif
 const DEFAULT_MIN_TOTAL_RANDOM = 150;
 const DEFAULT_MAX_TOTAL_RANDOM = 350;
 

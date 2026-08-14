@@ -1,7 +1,8 @@
 // src/modes.js
 // Tiga mode:
 //   1. Dari awal fitur Contribution Graph GitHub (2013) sampai tahun ini,
-//      dengan countdown ~5 menit setelah setiap tahun agar sesi tidak offline.
+//      dengan jeda 1,5 jam (simulasi mengetik ala manusia) setelah setiap tahun
+//      agar sesi tidak offline dan tidak terlihat seperti bot.
 //   2. Hanya pada tahun yang dipilih user.
 //   3. Tanggal sepenuhnya acak (hari, bulan, tahun) — sulit ditebak.
 //
@@ -11,7 +12,8 @@
 // lama dipakai: tepat N commit acak per tahun.
 
 import { createCommit, pushToRemote, randomCommitMessage } from "./git.js";
-import { countdown, formatClock, formatIso, greenDaysInYear, randomDateAnywhere, randomDateInYear } from "./utils.js";
+import { simulateHumanActivity } from "./activity.js";
+import { formatClock, formatIso, greenDaysInYear, randomDateAnywhere, randomDateInYear } from "./utils.js";
 
 /**
  * Menentukan tanggal-tanggal commit untuk satu tahun.
@@ -54,8 +56,14 @@ export async function runMode1(t, opts) {
     const nextYear = year + 1;
     if (nextYear <= endYear && countdownSeconds > 0) {
       console.log(""); // jeda sebelum countdown
-      await countdown(countdownSeconds, (remaining) =>
-        t.make("countdownMsg", { time: formatClock(remaining), year: nextYear })
+      // Selama jeda, simulasikan aktivitas mengetik ala manusia agar sesi
+      // tetap aktif dan tidak terlihat seperti bot.
+      await simulateHumanActivity(countdownSeconds, (remaining, file) =>
+        process.stdout.write(
+          "\r\x1b[K" +
+          t.make("countdownMsg", { time: formatClock(remaining), year: nextYear }) +
+          (file ? ` | ${t.make("activityTyping")} ${file}` : "")
+        )
       );
     }
   }

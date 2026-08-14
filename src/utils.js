@@ -102,11 +102,13 @@ export function formatIso(date) {
   );
 }
 
-/** Format detik menjadi "MM:SS". */
+/** Format detik menjadi "MM:SS" (atau "HH:MM:SS" bila >= 1 jam). */
 export function formatClock(seconds) {
-  const m = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const s = String(seconds % 60).padStart(2, "0");
-  return `${m}:${s}`;
+  const pad = (n) => String(n).padStart(2, "0");
+  const s = pad(seconds % 60);
+  const m = pad(Math.floor(seconds / 60) % 60);
+  const h = Math.floor(seconds / 3600);
+  return h > 0 ? `${pad(h)}:${m}:${s}` : `${m}:${s}`;
 }
 
 /**

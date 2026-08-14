@@ -14,7 +14,8 @@ Dikembangkan oleh **Aetherion** — penyempurnaan dari proyek [goGreen](https://
   3. Tanggal sepenuhnya acak (hari, bulan, tahun)
 - 🌿 **Strategi "grafik hijau" (default Mode 1 & 2)**: ~98% hari di setiap tahun diisi commit — 1-2 commit per hari, sisanya dikosongkan agar grafik nyaris penuh hijau tanpa terlihat 100% palsu
 - 🌍 **12 bahasa UI**: English, Indonesia, 中文, 日本語, ไทย, Tiếng Việt, 한국어, Español, Français, Deutsch, العربية, Русский
-- ⏳ **Countdown otomatis** (default 5 menit) antar tahun agar sesi Codespaces/VS Code tidak *offline*
+- ⏳ **Countdown otomatis** (default 1,5 jam) antar tahun agar sesi Codespaces/VS Code tidak *offline*
+- ⌨️ **Simulasi aktivitas mengetik ala manusia** selama countdown: file acak bernama aneh dibuat, "diketik" artikel berita panjang dengan pola realistis (kecepatan, jeda berpikir, typo yang dikoreksi), lalu file dihapus — direktori kerja kembali bersih, diulang sampai countdown habis
 - 🔁 **Retry otomatis** untuk commit & push (hingga 3x)
 - ⌨️ Mode interaktif maupun non-interaktif (CLI flags / environment variables)
 
@@ -61,12 +62,12 @@ node index.js -l en -m 3 -c 200
 | Variabel | Keterangan |
 | --- | --- |
 | `AETHERION_START_YEAR` | Tahun awal mode 1 (default: `2013`, saat Contribution Graph muncul) |
-| `AETHERION_COUNTDOWN` | Jeda detik antar tahun di mode 1 (default: `300`; `0` = nonaktif) |
+| `AETHERION_COUNTDOWN` | Jeda detik antar tahun di mode 1 (default: `5400` = 1,5 jam; `0` = nonaktif). Selama jeda, script mensimulasikan aktivitas mengetik ala manusia |
 | `AETHERION_COMMITS` | Jumlah commit (sama dengan `--count`) |
 
 ### Penjelasan mode
 
-1. **Dari 2013** — membuat commit untuk setiap tahun dari 2013 hingga tahun sekarang, dengan countdown 5 menit setelah tiap tahun agar sesi tetap aktif. Secara default ~98% hari di setiap tahun diisi 1-2 commit (hari sisanya dikosongkan agar terlihat natural); gunakan `-c` untuk jumlah commit tetap per tahun.
+1. **Dari 2013** — membuat commit untuk setiap tahun dari 2013 hingga tahun sekarang, dengan jeda 1,5 jam setelah tiap tahun yang diisi simulasi mengetik ala manusia (file acak dibuat, diketik, lalu dihapus) agar sesi tetap aktif dan terhindar dari deteksi GitHub. Secara default ~98% hari di setiap tahun diisi 1-2 commit (hari sisanya dikosongkan agar terlihat natural); gunakan `-c` untuk jumlah commit tetap per tahun.
 2. **Tahun pilihan** — membuat commit hanya pada tahun yang kamu tentukan (strategi sama: ~98% hari, 1-2 commit per hari), lalu selesai.
 3. **Acak total** — membuat commit pada tanggal yang sepenuhnya acak (hari, bulan, tahun); sulit ditebak.
 
