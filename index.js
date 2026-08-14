@@ -11,13 +11,16 @@
 //   -l, --lang <code>   bahasa (en, id, zh, ja, th, vi, ko, es, fr, de, ar, ru)
 //   -m, --mode <1|2|3>  mode (1: dari 2013, 2: tahun pilihan, 3: acak total)
 //   -y, --year <YYYY>   tahun untuk mode 2
-//   -c, --count <n>     jumlah commit (override default acak)
+//   -c, --count <n>     jumlah commit per tahun (override strategi default "grafik hijau")
 //   -h, --help          bantuan ini
+//
+// Strategi default Mode 1 & 2 (tanpa -c): ~98% hari dalam setahun hijau,
+// 1-2 commit per hari, sisanya dikosongkan agar terlihat natural.
 //
 // Env:
 //   AETHERION_START_YEAR   tahun awal mode 1 (default: 2013, saat Contribution Graph muncul)
 //   AETHERION_COUNTDOWN    detik jeda antar tahun mode 1 (default: 300 = 5 menit; 0 = nonaktif)
-//   AETHERION_COMMITS      jumlah commit (sama dengan --count)
+//   AETHERION_COMMITS      jumlah commit per tahun (sama dengan --count)
 
 import process from "node:process";
 import random from "random";
@@ -29,8 +32,6 @@ import { askQuestion, closePrompter, pickNumber } from "./src/cli.js";
 const VERSION = "2.0";
 const GRAPH_START_YEAR = 2013; // Contribution Graph GitHub diluncurkan 7 Januari 2013
 const DEFAULT_COUNTDOWN_SECONDS = 300; // 5 menit
-const DEFAULT_MIN_PER_YEAR = 150;
-const DEFAULT_MAX_PER_YEAR = 300;
 const DEFAULT_MIN_TOTAL_RANDOM = 150;
 const DEFAULT_MAX_TOTAL_RANDOM = 350;
 
@@ -90,8 +91,11 @@ Opsi:
   -l, --lang <code>   bahasa (${LANGS.map((l) => l.code).join(", ")})
   -m, --mode <1|2|3>  mode: 1 dari 2013 | 2 tahun pilihan | 3 acak total
   -y, --year <YYYY>   tahun untuk mode 2
-  -c, --count <n>     jumlah commit (override default acak)
-  -h, --help          bantuan ini`);
+  -c, --count <n>     jumlah commit per tahun (override strategi default)
+  -h, --help          bantuan ini
+
+Strategi default Mode 1 & 2: ~98% hari dalam setahun hijau,
+1-2 commit per hari (tanpa -c). Gunakan -c untuk jumlah commit tetap.`);
 };
 
 async function main() {
@@ -160,13 +164,9 @@ async function main() {
     }
   }
 
-  // ---- Jumlah commit ----
-  const commitsPerYear = overrideCount
-    ? () => overrideCount
-    : () => random.int(DEFAULT_MIN_PER_YEAR, DEFAULT_MAX_PER_YEAR);
-  const totalRandomCount = overrideCount
-    ? overrideCount
-    : random.int(DEFAULT_MIN_TOTAL_RANDOM, DEFAULT_MAX_TOTAL_RANDOM);
+  // ---- Jumlah commit (hanya untuk override & mode 3) ----
+  const countOverride = overrideCount > 0 ? overrideCount : null;
+  const totalRandomCount = countOverride ?? random.int(DEFAULT_MIN_TOTAL_RANDOM, DEFAULT_MAX_TOTAL_RANDOM);
 
   console.log(`\n${t.starting} (${t.tagline} v${VERSION})`);
 
@@ -175,11 +175,11 @@ async function main() {
     total = await runMode1(t, {
       startYear,
       endYear: currentYear,
-      commitsPerYear,
+      countOverride,
       countdownSeconds: Number.isFinite(countdownSeconds) && countdownSeconds >= 0 ? countdownSeconds : DEFAULT_COUNTDOWN_SECONDS,
     });
   } else if (mode === 2) {
-    total = await runMode2(t, { year, commitsPerYear });
+    total = await runMode2(t, { year, countOverride });
   } else {
     total = await runMode3(t, { minYear: startYear, commitsPerYear: totalRandomCount });
   }

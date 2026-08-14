@@ -12,6 +12,7 @@ Dikembangkan oleh **Aetherion** — penyempurnaan dari proyek [goGreen](https://
   1. Dari lahirnya Contribution Graph (2013) sampai tahun sekarang
   2. Hanya pada tahun yang kamu pilih
   3. Tanggal sepenuhnya acak (hari, bulan, tahun)
+- 🌿 **Strategi "grafik hijau" (default Mode 1 & 2)**: ~98% hari di setiap tahun diisi commit — 1-2 commit per hari, sisanya dikosongkan agar grafik nyaris penuh hijau tanpa terlihat 100% palsu
 - 🌍 **12 bahasa UI**: English, Indonesia, 中文, 日本語, ไทย, Tiếng Việt, 한국어, Español, Français, Deutsch, العربية, Русский
 - ⏳ **Countdown otomatis** (default 5 menit) antar tahun agar sesi Codespaces/VS Code tidak *offline*
 - 🔁 **Retry otomatis** untuk commit & push (hingga 3x)
@@ -52,7 +53,7 @@ node index.js -l en -m 3 -c 200
 | `-l, --lang <code>` | Bahasa (`en`, `id`, `zh`, `ja`, `th`, `vi`, `ko`, `es`, `fr`, `de`, `ar`, `ru`) |
 | `-m, --mode <1\|2\|3>` | Mode: `1` dari 2013, `2` tahun pilihan, `3` acak total |
 | `-y, --year <YYYY>` | Tahun untuk mode 2 |
-| `-c, --count <n>` | Jumlah commit (menggantikan nilai acak default) |
+| `-c, --count <n>` | Jumlah commit per tahun (menggantikan strategi "grafik hijau") |
 | `-h, --help` | Tampilkan bantuan |
 
 ### Environment variables
@@ -65,8 +66,8 @@ node index.js -l en -m 3 -c 200
 
 ### Penjelasan mode
 
-1. **Dari 2013** — membuat commit untuk setiap tahun dari 2013 hingga tahun sekarang, dengan countdown 5 menit setelah tiap tahun agar sesi tetap aktif.
-2. **Tahun pilihan** — membuat commit hanya pada tahun yang kamu tentukan, lalu selesai.
+1. **Dari 2013** — membuat commit untuk setiap tahun dari 2013 hingga tahun sekarang, dengan countdown 5 menit setelah tiap tahun agar sesi tetap aktif. Secara default ~98% hari di setiap tahun diisi 1-2 commit (hari sisanya dikosongkan agar terlihat natural); gunakan `-c` untuk jumlah commit tetap per tahun.
+2. **Tahun pilihan** — membuat commit hanya pada tahun yang kamu tentukan (strategi sama: ~98% hari, 1-2 commit per hari), lalu selesai.
 3. **Acak total** — membuat commit pada tanggal yang sepenuhnya acak (hari, bulan, tahun); sulit ditebak.
 
 ## 🔧 Cara kerja
