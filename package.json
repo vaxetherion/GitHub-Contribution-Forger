@@ -1,19 +1,27 @@
 {
-  "name": "thomyorke",
-  "version": "1.0.0",
-  "description": "nice dream",
+  "name": "hack-github-contribution",
+  "version": "2.0.0",
+  "description": "Aetherion — GitHub Contribution Forger. Memalsukan grafik kontribusi GitHub (V2.0).",
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "node --test test/e2e.test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vaxetherion/GitHub-Contribution-Forger.git"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Aetherion (GitHub)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vaxetherion/GitHub-Contribution-Forger/issues"
+  },
+  "homepage": "https://github.com/vaxetherion/GitHub-Contribution-Forger#readme",
   "dependencies": {
     "jsonfile": "^6.1.0",
-    "moment": "^2.30.1",
     "random": "^4.1.0",
-    "simple-git": "^3.25.0"
+    "simple-git": "^3.36.0"
   }
 }

@@ -25,8 +25,8 @@ Dikembangkan oleh **Aetherion** — penyempurnaan dari proyek [goGreen](https://
 ## 🚀 Instalasi
 
 ```bash
-git clone https://github.com/Swevaga/Hack-GitHub-Contribution.git
-cd Hack-GitHub-Contribution
+git clone https://github.com/vaxetherion/GitHub-Contribution-Forger.git
+cd GitHub-Contribution-Forger
 npm install
 ```
 
@@ -107,5 +107,3 @@ Test end-to-end menjalankan script di dalam sandbox git lokal dengan remote *bar
 ## 📜 Lisensi
 
 [MIT](LICENSE)
-# GitHub-Contribution-Forger
-# GitHub-Contribution-Forger
